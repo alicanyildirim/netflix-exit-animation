@@ -1,65 +1,88 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-
+import React, { useEffect, useState } from "react";
+import Typography from '@material-ui/core/Typography';
+import 'animate.css/animate.css';
 export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+  
+  
+  const [isLeaving,setIsLeaving] = useState(false);
+  
+  useEffect(function mount() {
+    function onBeforeUnload() {
+      setIsLeaving(true);
+      console.log("unload!");
+    }
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+    window.addEventListener("beforeunload", onBeforeUnload);
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+    return function unMount() {
+      window.removeEventListener("beforeunload", onBeforeUnload);
+    };
+  });
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+  if (isLeaving) {
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+    return(
+      <div className={styles.container}>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+        <Head>
+          <title>Netflix BeforeUnload</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+        <main className={styles.main}>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+          <Typography variant="h1" component="h2" className="animate__animated animate__bounceOut animate__slow">
+            beforeunload
+          </Typography>
+        </main>
+      
+      </div>
+    )
+  } else {
+    
+    return (
+      <div className={styles.container}>
+        
+        <Head>
+          <title>Netflix BeforeUnload</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+
+        <main className={styles.main}>
+          <h8 className={styles.title}>
+            Exit animation with&nbsp;
+            <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload" target="_blank">onbeforeunload</a>
+          </h8>
+
+          <p className={styles.description}>
+            How does Netflix do it?&nbsp;
+            <code className={styles.code}>on github</code>
+          </p>
+          
+          <div className={styles.grid}>
+              <p className={styles.description}>
+                After you click on another website from the address bar, you should observe the exit animation. 
+              </p>
+              <p className={styles.description}>
+                The duration of this animation varies. 
+              </p>
+              <p className={styles.description}>
+                If the website to be visited has the fast largest contentful paint, 
+                the websites' transition will be too fast for the animation to be completed.               
+              </p>
+              <p className={styles.description}>
+                You can test the behavior of the animation with different websites.
+              </p>
+
+
+          </div>
+
+        </main>
+      </div>
+    )
+
+  }
+  
 }
