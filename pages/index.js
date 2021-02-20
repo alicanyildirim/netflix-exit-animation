@@ -3,6 +3,9 @@ import styles from '../styles/Home.module.css'
 import React, { useEffect, useState } from "react";
 import Typography from '@material-ui/core/Typography';
 import 'animate.css/animate.css';
+import github_gif from '../assets/to-github.gif';
+import lichess_gif from '../assets/to-lichess.gif';
+
 export default function Home() {
   
   
@@ -58,10 +61,22 @@ export default function Home() {
 
           <p className={styles.description}>
             How does Netflix do it?&nbsp;
-            <code className={styles.code}>on github</code>
+            <a href="https://github.com/alicanyildirim/netflix-exit-animation" target="_blank">
+              <code className={styles.code}>on github</code>
+            </a>
           </p>
           
           <div className={styles.grid}>
+
+              <div style={{display: "flex", flexDirection: "row"}}>
+                <img src={github_gif} alt="To Github Gif" className={styles.card}/>
+                <img src={lichess_gif} alt="To Lichess Gif" className={styles.card}/>
+
+              </div>
+
+
+                
+
               <p className={styles.description}>
                 After you click on another website from the address bar, you should observe the exit animation. 
               </p>
